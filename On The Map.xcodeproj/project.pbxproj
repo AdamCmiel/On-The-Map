@@ -7,13 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7716E48F1BED9D0000CC2208 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7716E48E1BED9D0000CC2208 /* API.swift */; };
+		7716E4901BED9D0000CC2208 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7716E48E1BED9D0000CC2208 /* API.swift */; };
+		779B45111C1D0D820024CDDE /* StudentDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779B45101C1D0D820024CDDE /* StudentDataSource.swift */; };
+		779B45121C1D0D820024CDDE /* StudentDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779B45101C1D0D820024CDDE /* StudentDataSource.swift */; };
+		779B45131C1D0D820024CDDE /* StudentDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779B45101C1D0D820024CDDE /* StudentDataSource.swift */; };
 		77CCC17C1BE694F000390913 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CCC17B1BE694F000390913 /* AppDelegate.swift */; };
-		77CCC17E1BE694F000390913 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CCC17D1BE694F000390913 /* ViewController.swift */; };
 		77CCC1811BE694F100390913 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77CCC17F1BE694F100390913 /* Main.storyboard */; };
 		77CCC1831BE694F100390913 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77CCC1821BE694F100390913 /* Assets.xcassets */; };
 		77CCC1861BE694F100390913 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77CCC1841BE694F100390913 /* LaunchScreen.storyboard */; };
 		77CCC1911BE694F100390913 /* On_The_MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CCC1901BE694F100390913 /* On_The_MapTests.swift */; };
 		77CCC19C1BE694F100390913 /* On_The_MapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CCC19B1BE694F100390913 /* On_The_MapUITests.swift */; };
+		77CCC1AA1BE70A5E00390913 /* on the map assets in Resources */ = {isa = PBXBuildFile; fileRef = 77CCC1A91BE70A5E00390913 /* on the map assets */; };
+		77CCC1AC1BE70C1C00390913 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CCC1AB1BE70C1C00390913 /* LoginViewController.swift */; };
+		77CCC1AE1BE70C3E00390913 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CCC1AD1BE70C3E00390913 /* TabBarController.swift */; };
+		77CCC1B01BE70C6100390913 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CCC1AF1BE70C6100390913 /* MapViewController.swift */; };
+		77CCC1B21BE70CA600390913 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CCC1B11BE70CA600390913 /* ListViewController.swift */; };
+		77CCC1B41BE70CB600390913 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CCC1B31BE70CB600390913 /* InformationViewController.swift */; };
+		77CCC1B61BE71C8600390913 /* APIActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CCC1B51BE71C8600390913 /* APIActions.swift */; };
+		77CCC1BA1BE7407600390913 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CCC1B91BE7407600390913 /* MapKit.framework */; };
+		BDA61CC9D224BCA292BB1964 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8E8991C6F3C990DFB23E77 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +47,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1DFEF541391A63F50730C91A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		7716E48E1BED9D0000CC2208 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		7776B8C81BEC7C08007550DC /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
+		779B45101C1D0D820024CDDE /* StudentDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentDataSource.swift; sourceTree = "<group>"; };
 		77CCC1781BE694F000390913 /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		77CCC17B1BE694F000390913 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		77CCC17D1BE694F000390913 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		77CCC1801BE694F100390913 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		77CCC1821BE694F100390913 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77CCC1851BE694F100390913 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +63,16 @@
 		77CCC1971BE694F100390913 /* On The MapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "On The MapUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		77CCC19B1BE694F100390913 /* On_The_MapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = On_The_MapUITests.swift; sourceTree = "<group>"; };
 		77CCC19D1BE694F100390913 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		77CCC1A91BE70A5E00390913 /* on the map assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "on the map assets"; sourceTree = "<group>"; };
+		77CCC1AB1BE70C1C00390913 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		77CCC1AD1BE70C3E00390913 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		77CCC1AF1BE70C6100390913 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		77CCC1B11BE70CA600390913 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		77CCC1B31BE70CB600390913 /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
+		77CCC1B51BE71C8600390913 /* APIActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIActions.swift; sourceTree = "<group>"; };
+		77CCC1B91BE7407600390913 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		AE8E8991C6F3C990DFB23E77 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8F24F39281A1D07AD31CCFA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +80,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77CCC1BA1BE7407600390913 /* MapKit.framework in Frameworks */,
+				BDA61CC9D224BCA292BB1964 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +109,9 @@
 				77CCC18F1BE694F100390913 /* On The MapTests */,
 				77CCC19A1BE694F100390913 /* On The MapUITests */,
 				77CCC1791BE694F000390913 /* Products */,
+				77CCC1A91BE70A5E00390913 /* on the map assets */,
+				9BECB3C75CD8735DE6C2B592 /* Pods */,
+				C31CCBD5A6E95BF7D16E6727 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,9 +128,17 @@
 		77CCC17A1BE694F000390913 /* On The Map */ = {
 			isa = PBXGroup;
 			children = (
+				779B45101C1D0D820024CDDE /* StudentDataSource.swift */,
+				7716E48E1BED9D0000CC2208 /* API.swift */,
+				7776B8C81BEC7C08007550DC /* Facebook.h */,
 				77CCC17B1BE694F000390913 /* AppDelegate.swift */,
-				77CCC17D1BE694F000390913 /* ViewController.swift */,
 				77CCC17F1BE694F100390913 /* Main.storyboard */,
+				77CCC1AB1BE70C1C00390913 /* LoginViewController.swift */,
+				77CCC1B51BE71C8600390913 /* APIActions.swift */,
+				77CCC1AD1BE70C3E00390913 /* TabBarController.swift */,
+				77CCC1AF1BE70C6100390913 /* MapViewController.swift */,
+				77CCC1B11BE70CA600390913 /* ListViewController.swift */,
+				77CCC1B31BE70CB600390913 /* InformationViewController.swift */,
 				77CCC1821BE694F100390913 /* Assets.xcassets */,
 				77CCC1841BE694F100390913 /* LaunchScreen.storyboard */,
 				77CCC1871BE694F100390913 /* Info.plist */,
@@ -125,6 +164,24 @@
 			path = "On The MapUITests";
 			sourceTree = "<group>";
 		};
+		9BECB3C75CD8735DE6C2B592 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1DFEF541391A63F50730C91A /* Pods.debug.xcconfig */,
+				E8F24F39281A1D07AD31CCFA /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C31CCBD5A6E95BF7D16E6727 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				77CCC1B91BE7407600390913 /* MapKit.framework */,
+				AE8E8991C6F3C990DFB23E77 /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +189,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 77CCC1A01BE694F100390913 /* Build configuration list for PBXNativeTarget "On The Map" */;
 			buildPhases = (
+				DCB481C91001B5BEF7F411EC /* Check Pods Manifest.lock */,
 				77CCC1741BE694F000390913 /* Sources */,
 				77CCC1751BE694F000390913 /* Frameworks */,
 				77CCC1761BE694F000390913 /* Resources */,
+				FA3EC8996FE10159F7CB69C5 /* Embed Pods Frameworks */,
+				4B79601F033F7938B83EE687 /* Copy Pods Resources */,
+				7716E4911BEDA20900CC2208 /* Highlight Warning */,
 			);
 			buildRules = (
 			);
@@ -193,6 +254,11 @@
 				TargetAttributes = {
 					77CCC1771BE694F000390913 = {
 						CreatedOnToolsVersion = 7.1;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					77CCC18B1BE694F100390913 = {
 						CreatedOnToolsVersion = 7.1;
@@ -229,6 +295,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77CCC1AA1BE70A5E00390913 /* on the map assets in Resources */,
 				77CCC1861BE694F100390913 /* LaunchScreen.storyboard in Resources */,
 				77CCC1831BE694F100390913 /* Assets.xcassets in Resources */,
 				77CCC1811BE694F100390913 /* Main.storyboard in Resources */,
@@ -251,13 +318,82 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4B79601F033F7938B83EE687 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7716E4911BEDA20900CC2208 /* Highlight Warning */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Highlight Warning";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:|WARN:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+		};
+		DCB481C91001B5BEF7F411EC /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FA3EC8996FE10159F7CB69C5 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		77CCC1741BE694F000390913 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77CCC17E1BE694F000390913 /* ViewController.swift in Sources */,
+				77CCC1AE1BE70C3E00390913 /* TabBarController.swift in Sources */,
+				77CCC1B61BE71C8600390913 /* APIActions.swift in Sources */,
+				77CCC1AC1BE70C1C00390913 /* LoginViewController.swift in Sources */,
 				77CCC17C1BE694F000390913 /* AppDelegate.swift in Sources */,
+				779B45111C1D0D820024CDDE /* StudentDataSource.swift in Sources */,
+				77CCC1B21BE70CA600390913 /* ListViewController.swift in Sources */,
+				77CCC1B01BE70C6100390913 /* MapViewController.swift in Sources */,
+				7716E48F1BED9D0000CC2208 /* API.swift in Sources */,
+				77CCC1B41BE70CB600390913 /* InformationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +401,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7716E4901BED9D0000CC2208 /* API.swift in Sources */,
+				779B45121C1D0D820024CDDE /* StudentDataSource.swift in Sources */,
 				77CCC1911BE694F100390913 /* On_The_MapTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,6 +411,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				779B45131C1D0D820024CDDE /* StudentDataSource.swift in Sources */,
 				77CCC19C1BE694F100390913 /* On_The_MapUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -397,23 +536,30 @@
 		};
 		77CCC1A11BE694F100390913 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1DFEF541391A63F50730C91A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "On The Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.adamcmiel.app.On-The-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "On The Map/Facebook.h";
 			};
 			name = Debug;
 		};
 		77CCC1A21BE694F100390913 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E8F24F39281A1D07AD31CCFA /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "On The Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.adamcmiel.app.On-The-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "On The Map/Facebook.h";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "";
 			};
 			name = Release;
 		};
@@ -484,6 +630,7 @@
 				77CCC1A21BE694F100390913 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		77CCC1A31BE694F100390913 /* Build configuration list for PBXNativeTarget "On The MapTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +639,7 @@
 				77CCC1A51BE694F100390913 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		77CCC1A61BE694F100390913 /* Build configuration list for PBXNativeTarget "On The MapUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +648,7 @@
 				77CCC1A81BE694F100390913 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
