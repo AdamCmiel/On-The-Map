@@ -35,9 +35,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, Refreshing {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        //if store.hasUdacitySession {
+        if store.hasUdacitySession {
             store.getStudentLocations { [unowned self] data in self.refresh(data) }
-        //}
+        }
     }
     
     // MARK: MKMapViewDelegate

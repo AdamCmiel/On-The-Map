@@ -8,8 +8,13 @@
 
 import UIKit
 
+protocol LoginControllerDelegate {
+    func loginViewController(loginViewController: LoginViewController, didSuccessfullyLoginWithData: JSONData)
+}
+
 class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDelegate {
     
+    var delegate: LoginControllerDelegate?
     var controls: [UIControl] {
         get { return [emailField, passwordField, facebookButton] }
     }
@@ -17,8 +22,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
     var loginCallback: APIResponse -> Void {
         get {
             return ({ [unowned self] result in
-                self.enable()
-                
                 switch result {
                 case .Failure(let error):
                     
@@ -34,13 +37,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
                     }
                     
                 case .Success(let data):
-                    
                     // if successful login, store login in the dataStore
-                    StudentDataStore.sharedStore.session = data
-                    
-                    self.dismiss()
-                    
+                    self.delegate?.loginViewController(self, didSuccessfullyLoginWithData: data)
                 }
+                
+                self.enable()
             })
         }
     }
@@ -57,10 +58,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
     private final func signIn() {
         disable()
         APIActions.signIn(email: emailField.text!, password: passwordField.text!, completion: loginCallback)
-    }
-    
-    func dismiss() {
-        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func disable() {
@@ -86,7 +83,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
         super.viewDidLoad()
         
         if (FBSDKAccessToken.currentAccessToken() != nil) {
-            dismiss()
+            delegate?.loginViewController(self, didSuccessfullyLoginWithData: ["token": FBSDKAccessToken.currentAccessToken()])
         }
         
         [emailField, passwordField].forEach {
