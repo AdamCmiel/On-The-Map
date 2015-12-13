@@ -7,7 +7,7 @@
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
-        <!--Map View Controller-->
+        <!--Map-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
@@ -36,7 +36,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="c4f-8b-Fk8" secondAttribute="bottom" id="wEi-13-qKO"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="map" id="9Pf-sk-by1"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="map" id="9Pf-sk-by1"/>
                     <navigationItem key="navigationItem" id="AiB-cH-LTI"/>
                     <connections>
                         <outlet property="mapView" destination="c4f-8b-Fk8" id="eJe-oT-1fg"/>
@@ -46,7 +46,7 @@
             </objects>
             <point key="canvasLocation" x="1730" y="2392"/>
         </scene>
-        <!--List View Controller-->
+        <!--List-->
         <scene sceneID="eBD-kh-Mlf">
             <objects>
                 <viewController id="ovu-Af-OfV" customClass="ListViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
@@ -89,7 +89,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Jhl-V3-SVU" secondAttribute="trailing" constant="-20" id="kHh-oP-vV6"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="list" id="3iX-82-1eS"/>
+                    <tabBarItem key="tabBarItem" title="List" image="list" id="3iX-82-1eS"/>
                     <connections>
                         <outlet property="tableView" destination="Jhl-V3-SVU" id="1P9-Tl-rSz"/>
                     </connections>
@@ -271,6 +271,9 @@
                                 <rect key="frame" x="20" y="28" width="60" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancel:" destination="85e-6E-JBu" eventType="touchUpInside" id="ltb-mJ-haH"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Where were you studying today?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hlG-Bz-qNP">
                                 <rect key="frame" x="20" y="73" width="560" height="21"/>
@@ -288,18 +291,24 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="667-4z-IxA">
                                 <rect key="frame" x="0.0" y="163" width="600" height="437"/>
                                 <animations/>
+                                <connections>
+                                    <outlet property="delegate" destination="85e-6E-JBu" id="cub-8K-RcM"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Agf-B8-3ze">
-                                <rect key="frame" x="245" y="550" width="80" height="30"/>
+                                <rect key="frame" x="230" y="550" width="111" height="30"/>
                                 <animations/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="ZZO-0T-1xA"/>
                                 </constraints>
-                                <state key="normal" title="Submit"/>
+                                <state key="normal" title="Find on the Map"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="buttonPressed:" destination="85e-6E-JBu" eventType="touchUpInside" id="pYM-RR-dD7"/>
+                                </connections>
                             </button>
                         </subviews>
                         <animations/>
@@ -321,6 +330,12 @@
                             <constraint firstItem="hlG-Bz-qNP" firstAttribute="trailing" secondItem="qse-Ul-iSS" secondAttribute="trailingMargin" id="y19-1O-QhH"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="findButton" destination="Agf-B8-3ze" id="d0h-kl-ifn"/>
+                        <outlet property="locationField" destination="lSL-Ly-p53" id="T9l-0S-PnM"/>
+                        <outlet property="mapView" destination="667-4z-IxA" id="AuY-eg-1Fl"/>
+                        <outlet property="promptLabel" destination="hlG-Bz-qNP" id="Ze9-xJ-Aas"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5tF-g7-jt5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
