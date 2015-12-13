@@ -22,6 +22,9 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c4f-8b-Fk8">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <animations/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Za2-zv-ADw"/>
+                                </connections>
                             </mapView>
                         </subviews>
                         <animations/>
@@ -55,10 +58,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Jhl-V3-SVU">
-                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Jhl-V3-SVU">
+                                <rect key="frame" x="0.0" y="56" width="600" height="487"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="c4h-zf-MER">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c4h-zf-MER" id="Jaw-Ie-WK6">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="ovu-Af-OfV" id="Oxc-sr-Vjh"/>
+                                    <outlet property="delegate" destination="ovu-Af-OfV" id="Oac-4i-g8n"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <animations/>
@@ -71,6 +90,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="list" id="3iX-82-1eS"/>
+                    <connections>
+                        <outlet property="tableView" destination="Jhl-V3-SVU" id="1P9-Tl-rSz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aUW-Eh-cs2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -207,7 +229,11 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="On the Map" id="Z7o-PK-rIt">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="refresh" id="bue-Wf-dBh"/>
+                            <barButtonItem systemItem="refresh" id="bue-Wf-dBh">
+                                <connections>
+                                    <action selector="refeshData:" destination="MO0-XT-XEK" id="sNR-58-gRt"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem image="pin" id="SLO-OX-cZR">
                                 <connections>
                                     <segue destination="85e-6E-JBu" kind="presentation" id="5Pd-CY-miK"/>

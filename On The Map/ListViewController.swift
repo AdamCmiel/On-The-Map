@@ -8,28 +8,50 @@
 
 import UIKit
 
-class ListViewController: UIViewController {
+let CELL_IDENTIFIER = "cell"
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, Refreshing {
+    
+    // optional for refresh button pressed before viewDidLoad
+    @IBOutlet weak var tableView: UITableView?
+    
+    var store: StudentDataStore {
+        get { return StudentDataStore.sharedStore }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func refresh(data: [StudentInformationAnnotation]) {
+        tableView?.reloadData()
+        print("got student locations")
     }
-    */
+    
+    // MARK: - UIViewController
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        store.getStudentLocations { [unowned self] data in self.refresh(data) }
+    }
+    
+    // MARK: - UITableViewDelegate, UITableViewDataSource
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return store.data.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(CELL_IDENTIFIER, forIndexPath: indexPath)
+        let data = store.data[indexPath.row]
+        cell.textLabel!.text = data.name
+        return cell
+    }
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let data = store.data[indexPath.row]
+        let urlPath = data.mediaURL
+        
+        if let url = NSURL(string: urlPath) {
+            let tbController = tabBarController as! TabBarController
+            tbController.presentSafariViewController(url)
+        }
+    }
 
 }

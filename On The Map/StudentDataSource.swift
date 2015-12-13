@@ -19,6 +19,10 @@ class StudentDataStore: NSObject {
         get { return session != nil }
     }
     
+    var data: [StudentInformation] {
+        get { return backing }
+    }
+    
     private var backing: [StudentInformation] = []
     
     func merge(data: [JSONData]) -> Self {
@@ -28,11 +32,11 @@ class StudentDataStore: NSObject {
     
     func sort() -> [StudentInformation] {
         // remove duplicates
-        backing = uniq(backing).sort { return $0.updatedAt < $1.updatedAt }
+        backing = uniq(backing).sort { return $0.updatedAt > $1.updatedAt }
         return backing
     }
     
-    func getStudentLocations(completion: [MKAnnotation] -> ()) {
+    func getStudentLocations(completion: [StudentInformationAnnotation] -> ()) {
         APIActions.getStudentLocations { [unowned self] result in
             switch result {
             case .Failure:
@@ -62,7 +66,7 @@ struct StudentInformation: Hashable {
     let latitude: Double
     let longitude: Double
     let mapString: String
-    let mediaURL: String?
+    let mediaURL: String
     let objectId: String
     let uniqueKey: String
     let createdAt: NSDate
@@ -77,7 +81,7 @@ struct StudentInformation: Hashable {
         self.latitude = datum["latitude"]! as! Double
         self.longitude = datum["longitude"]! as! Double
         self.mapString = datum["mapString"]! as! String
-        self.mediaURL = datum["mediaUrl"] as? String
+        self.mediaURL = datum["mediaURL"]! as! String
         self.objectId = datum["objectId"]! as! String
         self.uniqueKey = datum["uniqueKey"]! as! String
         self.createdAt = createdAt
@@ -87,6 +91,12 @@ struct StudentInformation: Hashable {
     var hashValue: Int {
         get {
             return self.uniqueKey.hash
+        }
+    }
+    
+    var name: String? {
+        get {
+            return "\(self.firstName) \(self.lastName)"
         }
     }
     
@@ -104,13 +114,13 @@ class StudentInformationAnnotation: NSObject, MKAnnotation {
     
     var title: String? {
         get {
-            return info.mapString
+            return info.name
         }
     }
     
     var subtitle: String? {
         get {
-            return "\(info.firstName) \(info.lastName)"
+            return info.mediaURL
         }
     }
     
@@ -129,8 +139,8 @@ private func ==(lhs: NSDate, rhs: NSDate) -> Bool {
     return lhs === rhs || lhs.compare(rhs) == .OrderedSame
 }
 
-private func <(lhs: NSDate, rhs: NSDate) -> Bool {
-    return lhs.compare(rhs) == .OrderedAscending
+private func >(lhs: NSDate, rhs: NSDate) -> Bool {
+    return rhs.compare(lhs) == .OrderedAscending
 }
 
 // uniq method taken from http://stackoverflow.com/a/25739498

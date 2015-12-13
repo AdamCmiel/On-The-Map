@@ -12,7 +12,7 @@ import CoreLocation
 
 let MAP_ANNOTATION_IDENTIFIER = "map_pin"
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, Refreshing {
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -20,29 +20,33 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         get { return StudentDataStore.sharedStore }
     }
     
-    // MARK: UIViewController
+    private var mapViewsCurrentAnnotations: [MKAnnotation] = []
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        mapView.delegate = self
+    func refresh(data: [StudentInformationAnnotation]) {
+        mapView.removeAnnotations(mapViewsCurrentAnnotations)
+        mapView.addAnnotations(data)
+        
+        mapViewsCurrentAnnotations = data
+        print("got student locations")
     }
+    
+    // MARK: UIViewController
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if store.hasUdacitySession {
-            store.getStudentLocations { [unowned self] data in
-                
-                self.mapView.addAnnotations(data)
-                print("got student locations")
-            }
-        }
+        //if store.hasUdacitySession {
+            store.getStudentLocations { [unowned self] data in self.refresh(data) }
+        //}
     }
     
     // MARK: MKMapViewDelegate
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         print("annotation tapped")
+        
+        let tap = UITapGestureRecognizer(target: self, action: "annotationWasTapped:")
+        view.addGestureRecognizer(tap)
     }
 
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -53,9 +57,27 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
         
         annotationView!.annotation = annotation
+        annotationView!.canShowCallout = true
         annotationView!.image = UIImage(named: "pin")
         
         return annotationView
+    }
+    
+    // MARK: Gestures
+    
+    func annotationWasTapped(recognizer: UIGestureRecognizer) {
+        let view: MKAnnotationView = recognizer.view as! MKAnnotationView
+        let annotation = view.annotation as! StudentInformationAnnotation
+        
+        if let urlPath = annotation.subtitle {
+            if let url = NSURL(string: urlPath) {
+                let tbController = tabBarController as! TabBarController
+                tbController.presentSafariViewController(url)
+            }
+        } else {
+            print("no media url")
+            
+        }
     }
     
 }
