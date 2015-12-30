@@ -12,7 +12,7 @@ import CoreLocation
 
 let MAP_ANNOTATION_IDENTIFIER = "map_pin"
 
-class MapViewController: UIViewController, MKMapViewDelegate, Refreshing {
+class MapViewController: UIViewController, MKMapViewDelegate, Refreshing, MapViewControlling {
     
     @IBOutlet weak var mapView: MKMapView!
     
