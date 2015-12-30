@@ -18,6 +18,7 @@ class InformationViewController: UIViewController, MapViewControlling {
     }
     
     var state: State = .Prompt
+    var location: CLLocation?
 
     @IBAction func cancel(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
@@ -26,12 +27,38 @@ class InformationViewController: UIViewController, MapViewControlling {
     @IBAction func buttonPressed(sender: AnyObject) {
         switch state {
         case .Prompt:
+            
+            let queryString = locationField.text!
+            CLGeocoder().geocodeAddressString(queryString) { [unowned self] placemark, error in
+                guard error == nil else {
+                    return self.cancel(self)
+                }
+                
+                guard placemark!.count > 0 else {
+                    return self.cancel(self)
+                }
+                
+                let pm = placemark![0]
+                self.makeReady(pm.location!)
+            }
+            
             // forward gecode string
             break
         case .ReadyToSubmit:
             // submit information
+            
+            print("ready to go")
             break
         }
+    }
+    
+    func makeReady(location: CLLocation) {
+        self.location = location
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+        mapView.setRegion(region, animated: true)
+        findButton.setTitle("Submit", forState: .Normal)
+        findButton.setTitle("Submit", forState: .Selected)
+        state = .ReadyToSubmit
     }
     
     @IBOutlet weak var findButton: UIButton!
@@ -41,6 +68,10 @@ class InformationViewController: UIViewController, MapViewControlling {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        findButton.titleLabel?.numberOfLines = 0
+        findButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        findButton.titleLabel?.lineBreakMode = .ByClipping
         
         let pvc = presentingViewController as! UINavigationController
         pvc.viewControllers.forEach { vc in

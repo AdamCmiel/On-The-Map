@@ -276,16 +276,27 @@
                                     <outlet property="delegate" destination="85e-6E-JBu" id="cub-8K-RcM"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Agf-B8-3ze">
-                                <rect key="frame" x="230" y="550" width="111" height="30"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Agf-B8-3ze">
+                                <rect key="frame" x="245" y="550" width="111" height="30"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.51058382601351349" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="2YD-1o-9qM"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="UYo-cl-Zpf"/>
                                     <constraint firstAttribute="width" constant="80" id="ZZO-0T-1xA"/>
                                 </constraints>
                                 <state key="normal" title="Find on the Map"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="2YD-1o-9qM"/>
+                                        <exclude reference="UYo-cl-Zpf"/>
+                                        <exclude reference="ZZO-0T-1xA"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="buttonPressed:" destination="85e-6E-JBu" eventType="touchUpInside" id="pYM-RR-dD7"/>
                                 </connections>
@@ -293,6 +304,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="D37-ud-RdE" firstAttribute="top" secondItem="Agf-B8-3ze" secondAttribute="bottom" constant="20" id="20T-PJ-LLO"/>
                             <constraint firstItem="hlG-Bz-qNP" firstAttribute="leading" secondItem="qse-Ul-iSS" secondAttribute="leadingMargin" id="60t-cw-8Bf"/>
                             <constraint firstItem="ZJy-ne-1jC" firstAttribute="top" secondItem="srg-HG-AqE" secondAttribute="bottom" constant="8" id="715-Ru-9Rq"/>
                             <constraint firstItem="ZJy-ne-1jC" firstAttribute="leading" secondItem="qse-Ul-iSS" secondAttribute="leadingMargin" id="9At-18-s4t"/>
@@ -303,10 +315,9 @@
                             <constraint firstItem="667-4z-IxA" firstAttribute="top" secondItem="lSL-Ly-p53" secondAttribute="bottom" constant="16" id="fCa-Yf-vKK"/>
                             <constraint firstItem="lSL-Ly-p53" firstAttribute="trailing" secondItem="qse-Ul-iSS" secondAttribute="trailingMargin" id="hKt-g0-F1p"/>
                             <constraint firstItem="lSL-Ly-p53" firstAttribute="top" secondItem="hlG-Bz-qNP" secondAttribute="bottom" constant="10" id="lR4-Da-pJu"/>
-                            <constraint firstItem="D37-ud-RdE" firstAttribute="top" secondItem="Agf-B8-3ze" secondAttribute="bottom" constant="20" id="mSb-bq-Mjz"/>
-                            <constraint firstItem="Agf-B8-3ze" firstAttribute="centerX" secondItem="qse-Ul-iSS" secondAttribute="centerX" id="muP-Hw-pRl"/>
                             <constraint firstItem="667-4z-IxA" firstAttribute="leading" secondItem="qse-Ul-iSS" secondAttribute="leadingMargin" constant="-20" id="utS-P7-uEt"/>
                             <constraint firstItem="hlG-Bz-qNP" firstAttribute="trailing" secondItem="qse-Ul-iSS" secondAttribute="trailingMargin" id="y19-1O-QhH"/>
+                            <constraint firstItem="Agf-B8-3ze" firstAttribute="centerX" secondItem="qse-Ul-iSS" secondAttribute="centerX" id="zoi-UD-wfu"/>
                         </constraints>
                     </view>
                     <connections>
