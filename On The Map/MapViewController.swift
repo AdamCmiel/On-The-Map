@@ -25,7 +25,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, Refreshing, MapVie
     func refresh(data: [StudentInformationAnnotation]) {
         mapView.removeAnnotations(mapViewsCurrentAnnotations)
         mapView.addAnnotations(data)
-        
         mapViewsCurrentAnnotations = data
         print("got student locations")
     }

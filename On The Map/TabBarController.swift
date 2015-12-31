@@ -72,9 +72,11 @@ class TabBarController: UITabBarController, SFSafariViewControllerDelegate, CLLo
     }
     
     func presentSafariViewController(url: NSURL) {
-        let webView = SFSafariViewController(URL: url)
-        webView.delegate = self
-        presentViewController(webView, animated: true, completion: nil)
+        if let showUrl = url.sanitize {
+            let webView = SFSafariViewController(URL: showUrl)
+            webView.delegate = self
+            presentViewController(webView, animated: true, completion: nil)
+        }
     }
     
     func safariViewControllerDidFinish(controller: SFSafariViewController) {
@@ -86,17 +88,33 @@ class TabBarController: UITabBarController, SFSafariViewControllerDelegate, CLLo
         StudentDataStore.sharedStore.session = data
         
         locationManager.requestWhenInUseAuthorization()
+        
         if locationAuthorized {
             locationManager.startUpdatingLocation()
-            self.viewControllers?.forEach { vc in
-                if vc is MapViewControlling {
-                    let mvc = vc as! MapViewControlling
-                    let location = locationManager.location!
-                    let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
-                    mvc.mapView.setRegion(region, animated: true)
-                    mvc.mapView.showsUserLocation = true
-                }
+        }
+    }
+    
+    func loginViewController(loginViewController: LoginViewController, didPressSignUpButton: UIButton) {
+        let webView = SFSafariViewController(URL: NSURL.signUpURL)
+        webView.delegate = self
+        loginViewController.presentViewController(webView, animated: true, completion: nil)
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.viewControllers?.forEach { vc in
+            if vc is MapViewControlling {
+                let mvc = vc as! MapViewControlling
+                let location = locationManager.location!
+                let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+                mvc.mapView.setRegion(region, animated: true)
+                mvc.mapView.showsUserLocation = true
             }
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if locationAuthorized {
+            locationManager.startUpdatingLocation()
         }
     }
 }

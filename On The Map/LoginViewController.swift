@@ -10,16 +10,17 @@ import UIKit
 
 protocol LoginControllerDelegate {
     func loginViewController(loginViewController: LoginViewController, didSuccessfullyLoginWithData: JSONData)
+    func loginViewController(loginViewController: LoginViewController, didPressSignUpButton: UIButton)
 }
 
 class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDelegate {
     
     var delegate: LoginControllerDelegate?
-    var controls: [UIControl] {
+    private var controls: [UIControl] {
         get { return [emailField, passwordField, facebookButton] }
     }
     
-    var loginCallback: APIResponse -> Void {
+    private var loginCallback: APIResponse -> Void {
         get {
             return ({ [unowned self] result in
                 switch result {
@@ -38,7 +39,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
                     
                 case .Success(let data):
                     // if successful login, store login in the dataStore
-                    self.delegate?.loginViewController(self, didSuccessfullyLoginWithData: data)
+                    if let _ = data["error"] {
+                        return self.showLoginErrorAlertFromProvider("udacity")
+                    } else {
+                        self.delegate?.loginViewController(self, didSuccessfullyLoginWithData: data)
+                    }
                 }
                 
                 self.enable()
@@ -49,8 +54,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var facebookButton: UIButton!
+    @IBOutlet weak var signUpButton: UIButton!
     
-    @IBAction func facebookButtonPressed(sender: AnyObject) {
+    @IBAction final func signUpButtonPressed(sender: AnyObject) {
+        delegate?.loginViewController(self, didPressSignUpButton: signUpButton)
+    }
+    
+    @IBAction final func facebookButtonPressed(sender: AnyObject) {
         disable()
         APIActions.facebookLogInFromViewController(self, completion: loginCallback)
     }
@@ -60,18 +70,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
         APIActions.signIn(email: emailField.text!, password: passwordField.text!, completion: loginCallback)
     }
     
-    func disable() {
+    private final func disable() {
         controls.forEach { $0.enabled = false }
     }
     
-    func enable() {
+    private final func enable() {
         controls.forEach { $0.enabled = true }
     }
     
     private final func showLoginErrorAlertFromProvider(provider: String) {
         let alert = UIAlertController(title: "Failed Login", message: "there was an error logging in with \(provider)", preferredStyle: .Alert)
-        let okButton = UIAlertAction(title: "OK", style: .Default) { _ in
+        let okButton = UIAlertAction(title: "OK", style: .Default) { [unowned self] _ in
             alert.dismissViewControllerAnimated(true, completion: nil)
+            self.enable()
         }
         alert.addAction(okButton)
         presentViewController(alert, animated: true, completion: nil)
@@ -79,7 +90,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
     
     // MARK: - UIViewController
     
-    override func viewDidLoad() {
+    final override func viewDidLoad() {
         super.viewDidLoad()
         
         if (FBSDKAccessToken.currentAccessToken() != nil) {
@@ -97,7 +108,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
     
     // MARK: - UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    final func textFieldShouldReturn(textField: UITextField) -> Bool {
         // dismiss the keyboard
         textField.resignFirstResponder()
         // text input returned, sign in
@@ -106,3 +117,4 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
         return true
     }
 }
+

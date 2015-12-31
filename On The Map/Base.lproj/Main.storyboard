@@ -175,6 +175,15 @@
                                     <action selector="facebookButtonPressed:" destination="DmS-Y4-CJt" eventType="touchUpInside" id="e5e-19-woT"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ABa-PK-y2J">
+                                <rect key="frame" x="273" y="386" width="55" height="30"/>
+                                <state key="normal" title="Sign Up">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="signUpButtonPressed:" destination="DmS-Y4-CJt" eventType="touchUpInside" id="sNm-fr-A3y"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -189,9 +198,11 @@
                             <constraint firstItem="WhL-f6-omB" firstAttribute="top" secondItem="AMZ-oF-Rut" secondAttribute="topMargin" id="ESK-zg-UU4"/>
                             <constraint firstItem="oOu-yh-pE4" firstAttribute="trailing" secondItem="AMZ-oF-Rut" secondAttribute="trailingMargin" id="MgZ-ux-9Bp"/>
                             <constraint firstItem="obB-d5-me0" firstAttribute="centerX" secondItem="AMZ-oF-Rut" secondAttribute="centerX" id="Rrv-4T-Pea"/>
+                            <constraint firstItem="ABa-PK-y2J" firstAttribute="top" secondItem="Inb-t2-PAL" secondAttribute="bottom" constant="21" id="U6E-yA-MBT"/>
                             <constraint firstItem="obB-d5-me0" firstAttribute="top" secondItem="Fjo-QA-85k" secondAttribute="bottom" constant="21" id="Zf5-mj-Xgn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WhL-f6-omB" secondAttribute="trailing" constant="-20" id="afj-3B-Ya1"/>
                             <constraint firstItem="Fjo-QA-85k" firstAttribute="top" secondItem="rxU-rS-Eh0" secondAttribute="bottom" constant="60" id="ftS-of-D5u"/>
+                            <constraint firstItem="ABa-PK-y2J" firstAttribute="centerX" secondItem="AMZ-oF-Rut" secondAttribute="centerX" id="hL7-Ov-2pE"/>
                             <constraint firstItem="oOu-yh-pE4" firstAttribute="leading" secondItem="AMZ-oF-Rut" secondAttribute="leadingMargin" id="ly8-sl-hJZ"/>
                             <constraint firstItem="Fjo-QA-85k" firstAttribute="centerX" secondItem="AMZ-oF-Rut" secondAttribute="centerX" id="mhL-dS-4Og"/>
                             <constraint firstItem="WhL-f6-omB" firstAttribute="leading" secondItem="AMZ-oF-Rut" secondAttribute="leadingMargin" constant="-20" id="vja-Lt-grD"/>
@@ -202,6 +213,7 @@
                         <outlet property="emailField" destination="oOu-yh-pE4" id="Jlf-Uu-afR"/>
                         <outlet property="facebookButton" destination="nS6-eD-aIT" id="EbR-FC-fZz"/>
                         <outlet property="passwordField" destination="Inb-t2-PAL" id="hRe-aa-XFa"/>
+                        <outlet property="signUpButton" destination="ABa-PK-y2J" id="0r0-uw-HeX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CAi-3S-Ra4" userLabel="First Responder" sceneMemberID="firstResponder"/>
