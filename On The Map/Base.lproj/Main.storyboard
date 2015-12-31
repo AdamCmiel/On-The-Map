@@ -214,6 +214,16 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="MO0-XT-XEK" customClass="TabBarController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="On the Map" id="Z7o-PK-rIt">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="EIQ-VX-fCP">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XmG-oT-lco">
+                                <rect key="frame" x="20" y="7" width="133" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Logout"/>
+                                <connections>
+                                    <action selector="logout:" destination="MO0-XT-XEK" eventType="touchUpInside" id="fIG-Gq-YcQ"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="refresh" id="bue-Wf-dBh">
                                 <connections>

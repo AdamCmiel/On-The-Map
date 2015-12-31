@@ -10,58 +10,139 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class InformationViewController: UIViewController, MapViewControlling {
+typealias VoidCallback = () -> ()
+
+class InformationViewController: UIViewController, MapViewControlling, UITextFieldDelegate {
     
-    enum State {
-        case Prompt
+    private enum State {
+        case LocationPrompt
+        case URLPrompt
         case ReadyToSubmit
     }
     
-    var state: State = .Prompt
-    var location: CLLocation?
+    private var state: State = .LocationPrompt
+    private var location: CLLocation?
+    private var url: String = "https://www.udacity.com"
 
-    @IBAction func cancel(sender: AnyObject) {
+    @IBAction final func cancel(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func buttonPressed(sender: AnyObject) {
+    @IBAction final func buttonPressed(sender: AnyObject) {
         switch state {
-        case .Prompt:
-            
+        case .LocationPrompt:
             let queryString = locationField.text!
+            promptLabel.text = "Searching for the location"
+            disable()
+            
             CLGeocoder().geocodeAddressString(queryString) { [unowned self] placemark, error in
                 guard error == nil else {
-                    return self.cancel(self)
+                    return self.geocodeAlert(.Error, then: {
+                        self.enable()
+                    })
                 }
                 
                 guard placemark!.count > 0 else {
-                    return self.cancel(self)
+                    return self.geocodeAlert(.NoMatches, then: {
+                        self.enable()
+                    })
                 }
                 
                 let pm = placemark![0]
-                self.makeReady(pm.location!)
+                let location = pm.location!
+                self.location = location
+                let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+                self.mapView.setRegion(region, animated: true)
+                self.setButtonTitle("Add URL")
+                self.promptLabel.text = "Add a url to your post"
+                self.locationField.text = nil
+                self.locationField.placeholder = self.url
+                self.locationField.returnKeyType = .Send
+                self.locationField.keyboardType = .URL
+                self.state = .URLPrompt
+                self.enable()
             }
+        case .URLPrompt:
+            url = locationField.text!
+            setButtonTitle("Submit")
+            promptLabel.text = "Submit Data"
+            state = .ReadyToSubmit
             
-            // forward gecode string
-            break
         case .ReadyToSubmit:
-            // submit information
-            
             sendInformationData()
-            break
         }
     }
     
-    func makeReady(location: CLLocation) {
-        self.location = location
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
-        mapView.setRegion(region, animated: true)
-        findButton.setTitle("Submit", forState: .Normal)
-        findButton.setTitle("Submit", forState: .Selected)
-        state = .ReadyToSubmit
+    final private func enable() {
+        locationField.enabled = true
+        findButton.enabled = true
     }
     
-    func sendInformationData() {
+    final private func disable() {
+        locationField.enabled = false
+        findButton.enabled = false
+    }
+    
+    private enum GeocodeAlertFailure {
+        case Error
+        case NoMatches
+    }
+    
+    final private func geocodeAlert(failure: GeocodeAlertFailure, then completion: VoidCallback) {
+        var message: String
+        
+        switch failure {
+        case .Error:
+            message = "There was an error geocoding the location"
+        case .NoMatches:
+            message = "Could not find location on map, try again?"
+        }
+        
+        let alert = UIAlertController(title: "Geocode Failed", message: message, preferredStyle: .Alert)
+        let okButton = UIAlertAction(title: "Dang, Try Again", style: .Default) { _ in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+            completion()
+        }
+        alert.addAction(okButton)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    private enum PostAlertType {
+        case Success
+        case Failure
+    }
+    
+    final private func postAlert(result: PostAlertType, then completion: VoidCallback) {
+        var message: String
+        var title: String
+        var buttonTitle: String
+        
+        switch result {
+        case .Success:
+            title = "Hooray!"
+            message = "Data saved successfully"
+            buttonTitle = "Okay"
+        case .Failure:
+            title = "Post Failed"
+            message = "Could not post message to server"
+            buttonTitle = "Sorry"
+        }
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let okButton = UIAlertAction(title: buttonTitle, style: .Default) { _ in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+            completion()
+        }
+        alert.addAction(okButton)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    final private func setButtonTitle(title: String) {
+        findButton.setTitle(title, forState: .Normal)
+        findButton.setTitle(title, forState: .Selected)
+    }
+    
+    final private func sendInformationData() {
         
         let store = StudentDataStore.sharedStore
         var data: [String: AnyObject] = [:]
@@ -92,14 +173,22 @@ class InformationViewController: UIViewController, MapViewControlling {
         
         data["mediaURL"] = "https://udacity.com"
         
+        disable()
+        promptLabel.text = "Sending Data to Server"
+        
         APIActions.postStudentLocation(data) { [unowned self] result in
             switch result {
             case .Success:
-                return self.cancel(self)
+                self.postAlert(.Success, then: {
+                    self.cancel(self)
+                })
             case .Failure(let error):
                 print("POST location error")
                 print(error)
-                return self.cancel(self)
+                
+                self.postAlert(.Failure, then: {
+                    self.cancel(self)
+                })
             }
         }
     }
@@ -109,12 +198,15 @@ class InformationViewController: UIViewController, MapViewControlling {
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     
-    override func viewWillAppear(animated: Bool) {
+    final override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         findButton.titleLabel?.numberOfLines = 0
         findButton.titleLabel?.adjustsFontSizeToFitWidth = true
         findButton.titleLabel?.lineBreakMode = .ByClipping
+        
+        locationField.returnKeyType = .Search
+        locationField.delegate = self
         
         let pvc = presentingViewController as! UINavigationController
         pvc.viewControllers.forEach { vc in
@@ -127,5 +219,18 @@ class InformationViewController: UIViewController, MapViewControlling {
                 }
             }
         }
+    }
+    
+    final func textFieldShouldReturn(textField: UITextField) -> Bool {
+        switch state {
+        case .LocationPrompt:
+            buttonPressed(self)
+        case .URLPrompt:
+            sendInformationData()
+        default:
+            cancel(self)
+        }
+        
+        return true
     }
 }

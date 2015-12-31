@@ -47,6 +47,13 @@ class TabBarController: UITabBarController, SFSafariViewControllerDelegate, CLLo
         }
     }
     
+    @IBAction func logout(sender: AnyObject) {
+        StudentDataStore.sharedStore = StudentDataStore()
+        APIActions.signOut() { [unowned self] _ in
+            self.showLoginViewController()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,11 +61,14 @@ class TabBarController: UITabBarController, SFSafariViewControllerDelegate, CLLo
         locationManager.delegate = self
         
         if !StudentDataStore.sharedStore.hasUdacitySession {
-            navigationController!.performSegueWithIdentifier("showLogin", sender: self)
-            let lvc = navigationController?.presentedViewController! as! LoginViewController
-            lvc.delegate = self
+            showLoginViewController()
         }
-        
+    }
+    
+    func showLoginViewController() {
+        navigationController!.performSegueWithIdentifier("showLogin", sender: self)
+        let lvc = navigationController?.presentedViewController! as! LoginViewController
+        lvc.delegate = self
     }
     
     func presentSafariViewController(url: NSURL) {

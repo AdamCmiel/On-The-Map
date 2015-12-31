@@ -31,9 +31,9 @@ struct APIActions {
     }
     
     static func signOut(completion: APICallback) {
-        // if there is a valid session
         if FBSDKAccessToken.currentAccessToken() != nil {
-            // destroy the facebook session token
+            FBSDKLoginManager().logOut()
+            completion(.Success([:]))
         } else {
             API.delete(.SignOut, nil, completion: completion)
         }
@@ -44,7 +44,7 @@ struct APIActions {
         // if there is a valid session
         let token = FBSDKAccessToken.currentAccessToken()
         if token != nil {
-            completion(APIResponse.Success(["token": token.tokenString]))
+            completion(.Success(["token": token.tokenString]))
         }
         
         let login = FBSDKLoginManager()
@@ -53,12 +53,12 @@ struct APIActions {
             
             if ((error) != nil) {
                 
-                completion(APIResponse.Failure(APIError(errorType: .Network, error: error)))
+                completion(.Failure(APIError(errorType: .Network, error: error)))
                 return
                 
             } else if result.isCancelled {
                 
-                completion(APIResponse.Failure(APIError(errorType: .Cancelled, error: nil)))
+                completion(.Failure(APIError(errorType: .Cancelled, error: nil)))
                 return
                 
             } else {
@@ -88,11 +88,11 @@ struct APIActions {
                     case .Success(let body):
                         
                         // NSURLSession.sharedSession gets cookie from API response
-                        completion(APIResponse.Success(body))
+                        completion(.Success(body))
                         
                     case .Failure(let error):
                         
-                        completion(APIResponse.Failure(error))
+                        completion(.Failure(error))
                         return
                     }
                 }

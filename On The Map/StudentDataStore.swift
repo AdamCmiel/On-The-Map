@@ -12,7 +12,11 @@ import CoreLocation
 
 class StudentDataStore: NSObject {
     
-    static let sharedStore = StudentDataStore()
+    static var sharedStore = StudentDataStore()
+    private var backing: [StudentInformation] = []
+    var data: [StudentInformation] {
+        return backing
+    }
     
     var firstName: String?
     var lastName: String?
@@ -31,13 +35,17 @@ class StudentDataStore: NSObject {
         }
     }
     
-    private func setUdacityKey() {
+    var hasUdacitySession: Bool {
+        return session != nil
+    }
+    
+    final private func setUdacityKey() {
         if let key = _session?["account"]?["key"] as? String {
             udacityKey = key
         }
     }
     
-    private func validSession() -> Bool {
+    final private func validSession() -> Bool {
         
         do {
             if let expirationDateString = _session?["session"]?["expiration"] as? String {
@@ -61,28 +69,18 @@ class StudentDataStore: NSObject {
         return false
     }
     
-    var hasUdacitySession: Bool {
-        return session != nil
-    }
-    
-    var data: [StudentInformation] {
-        return backing
-    }
-    
-    private var backing: [StudentInformation] = []
-    
-    func merge(data: [JSONData]) -> Self {
+    final private func merge(data: [JSONData]) -> Self {
         backing = backing + data.map { StudentInformation($0) }
         return self
     }
     
-    func sort() -> [StudentInformation] {
+    final private func sort() -> [StudentInformation] {
         // remove duplicates
         backing = uniq(backing).sort { return $0.updatedAt > $1.updatedAt }
         return backing
     }
     
-    func getStudentLocations(completion: [StudentInformationAnnotation] -> ()) {
+    final func getStudentLocations(completion: [StudentInformationAnnotation] -> ()) {
         APIActions.getStudentLocations { [unowned self] result in
             switch result {
             case .Failure:
