@@ -14,13 +14,59 @@ class StudentDataStore: NSObject {
     
     static let sharedStore = StudentDataStore()
     
-    var session: JSONData? = nil
+    var firstName: String?
+    var lastName: String?
+    var udacityKey: String?
+    
+    private var _session: JSONData?
+    
+    var session: JSONData? {
+        get {
+            return validSession() ? _session : nil
+        }
+        
+        set(s) {
+            _session = s
+            setUdacityKey()
+        }
+    }
+    
+    private func setUdacityKey() {
+        if let key = _session?["account"]?["key"] as? String {
+            udacityKey = key
+        }
+    }
+    
+    private func validSession() -> Bool {
+        
+        do {
+            if let expirationDateString = _session?["session"]?["expiration"] as? String {
+                let expirationDate = try dateParserForUdacityAPIDate(expirationDateString)
+                if expirationDate.timeIntervalSinceNow > 0 {
+                    return true
+                }
+            } else {
+                print("session has not expiration or is nil")
+            }
+            
+        } catch {
+            
+            print("could not parse date")
+            
+        }
+        
+        print("session expired or nil")
+        print(_session)
+        _session = nil
+        return false
+    }
+    
     var hasUdacitySession: Bool {
-        get { return session != nil }
+        return session != nil
     }
     
     var data: [StudentInformation] {
-        get { return backing }
+        return backing
     }
     
     private var backing: [StudentInformation] = []
@@ -54,11 +100,27 @@ class StudentDataStore: NSObject {
     }
 }
 
-private let dateParser: String -> NSDate? = ({
+private func dateParser(dateString: String) throws -> NSDate {
+    return try dateParser(dateString, dateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+}
+
+private func dateParserForUdacityAPIDate(dateString: String) throws -> NSDate {
+    return try dateParser(dateString, dateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ")
+}
+
+private func dateParser(dateString: String, dateFormat: String) throws -> NSDate {
     let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-    return NSDateFormatter.dateFromString(dateFormatter)
-})()
+    dateFormatter.dateFormat = dateFormat
+    
+    let optionalDate = dateFormatter.dateFromString(dateString)
+    if let date = optionalDate {
+        return date
+    } else {
+        throw DateInvalid()
+    }
+}
+
+private class DateInvalid: ErrorType {}
 
 struct StudentInformation: Hashable {
     let firstName: String
@@ -73,8 +135,16 @@ struct StudentInformation: Hashable {
     let updatedAt: NSDate
     
     init(_ datum: JSONData) {
-        let createdAt: NSDate = dateParser(datum["createdAt"]! as! String)!
-        let updatedAt: NSDate = dateParser(datum["updatedAt"]! as! String)!
+        var createdAt: NSDate
+        var updatedAt: NSDate
+        
+        do {
+            createdAt = try dateParser(datum["createdAt"]! as! String)
+            updatedAt = try dateParser(datum["updatedAt"]! as! String)
+        } catch {
+            createdAt = NSDate()
+            updatedAt = NSDate()
+        }
        
         self.firstName = datum["firstName"]! as! String
         self.lastName = datum["lastName"]! as! String

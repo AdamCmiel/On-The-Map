@@ -47,7 +47,7 @@ class InformationViewController: UIViewController, MapViewControlling {
         case .ReadyToSubmit:
             // submit information
             
-            print("ready to go")
+            sendInformationData()
             break
         }
     }
@@ -59,6 +59,49 @@ class InformationViewController: UIViewController, MapViewControlling {
         findButton.setTitle("Submit", forState: .Normal)
         findButton.setTitle("Submit", forState: .Selected)
         state = .ReadyToSubmit
+    }
+    
+    func sendInformationData() {
+        
+        let store = StudentDataStore.sharedStore
+        var data: [String: AnyObject] = [:]
+        
+        if let val = store.udacityKey {
+            data["uniqueKey"] = val
+        }
+        
+        if let val = store.firstName {
+            data["firstName"] = val
+        }
+        
+        if let val = store.lastName {
+            data["lastName"] = val
+        }
+        
+        if let val = location?.coordinate.latitude {
+            data["latitude"] = val
+        }
+        
+        if let val = location?.coordinate.longitude {
+            data["longitude"] = val
+        }
+        
+        if let val = locationField.text {
+            data["mapString"] = val
+        }
+        
+        data["mediaURL"] = "https://udacity.com"
+        
+        APIActions.postStudentLocation(data) { [unowned self] result in
+            switch result {
+            case .Success:
+                return self.cancel(self)
+            case .Failure(let error):
+                print("POST location error")
+                print(error)
+                return self.cancel(self)
+            }
+        }
     }
     
     @IBOutlet weak var findButton: UIButton!

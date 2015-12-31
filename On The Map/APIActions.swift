@@ -66,6 +66,23 @@ struct APIActions {
                 let token = FBSDKAccessToken.currentAccessToken()
                 let tokenString: String = token.tokenString
                 
+                let fbRequest = FBSDKGraphRequest(graphPath:"me", parameters: nil);
+                fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
+                    
+                    guard error == nil else {
+                        print("Error Getting Info \(error)");
+                        return
+                    }
+                    
+                    let name = result["name"] as! String
+                    let names = name.componentsSeparatedByString(" ")
+                    let firstName = names.first
+                    let lastName = names.last
+                    
+                    StudentDataStore.sharedStore.firstName = firstName
+                    StudentDataStore.sharedStore.lastName = lastName
+                }
+                
                 API.post(.SignIn, ["facebook_mobile": ["access_token": tokenString]]) { response in
                     switch response {
                     case .Success(let body):
@@ -90,8 +107,12 @@ struct APIActions {
         API.get(.StudentLocations, headers: parseHeaders, completion: completion)
     }
     
-    static func postStudentLocation(completion: APICallback) {
-        let postData = ["foo":"bar"]
-        API.post(.StudentLocations, postData, headers: parseHeaders, completion: completion)
+    static func postStudentLocation(var data: JSONData, completion: APICallback) {
+        
+        if data["url"] == nil {
+            data["url"] = "https://www.udacity.com"
+        }
+        
+        API.post(.StudentLocations, data, headers: parseHeaders, completion: completion)
     }
 }
