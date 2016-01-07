@@ -75,12 +75,20 @@ class InformationViewController: UIViewController, MapViewControlling, UITextFie
     
     final private func enable() {
         locationField.enabled = true
+        locationField.hidden = false
         findButton.enabled = true
+        activityIndicator.hidden = true
+        if activityIndicator.isAnimating() {
+            activityIndicator.stopAnimating()
+        }
     }
     
     final private func disable() {
         locationField.enabled = false
+        locationField.hidden = true
         findButton.enabled = false
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
     }
     
     private enum GeocodeAlertFailure {
@@ -197,6 +205,7 @@ class InformationViewController: UIViewController, MapViewControlling, UITextFie
     @IBOutlet weak var promptLabel: UILabel!
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     final override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -207,18 +216,6 @@ class InformationViewController: UIViewController, MapViewControlling, UITextFie
         
         locationField.returnKeyType = .Search
         locationField.delegate = self
-        
-        let pvc = presentingViewController as! UINavigationController
-        pvc.viewControllers.forEach { vc in
-            if vc is TabBarController {
-                let tbc = vc as! TabBarController
-                if tbc.locationAuthorized {
-                    let location = tbc.locationManager.location!
-                    let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
-                    mapView.setRegion(region, animated: true)
-                }
-            }
-        }
     }
     
     final func textFieldShouldReturn(textField: UITextField) -> Bool {

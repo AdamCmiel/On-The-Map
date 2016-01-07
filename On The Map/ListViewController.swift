@@ -10,26 +10,8 @@ import UIKit
 
 let CELL_IDENTIFIER = "cell"
 
-class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, Refreshing {
-    
-    // optional for refresh button pressed before viewDidLoad
+class ListViewController: TabViewController, UITableViewDelegate, UITableViewDataSource, Refreshing {
     @IBOutlet weak var tableView: UITableView?
-    
-    var store: StudentDataStore {
-        get { return StudentDataStore.sharedStore }
-    }
-    
-    func refresh(data: [StudentInformationAnnotation]) {
-        tableView?.reloadData()
-        print("got student locations")
-    }
-    
-    // MARK: - UIViewController
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        store.getStudentLocations { [unowned self] data in self.refresh(data) }
-    }
     
     // MARK: - UITableViewDelegate, UITableViewDataSource
     
@@ -53,5 +35,11 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             tbController.presentSafariViewController(url)
         }
     }
-
+    
+    // MARK: - Refreshing
+    
+    func refresh(data: [StudentInformationAnnotation]) {
+        tableView?.reloadData()
+        print("got student locations")
+    }
 }

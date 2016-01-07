@@ -10,10 +10,12 @@ import Foundation
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-let parseHeaders = [
-    "x-parse-rest-api-key": "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY",
-    "x-parse-application-id": "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
-]
+//let parseHeaders = [
+//    "x-parse-rest-api-key": "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY",
+//    "x-parse-application-id": "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+//]
+
+let parseHeaders: [String: String]? = NSBundle.mainBundle().infoDictionary?["ParseHeaders"] as? [String: String]
 
 struct APIActions {
     

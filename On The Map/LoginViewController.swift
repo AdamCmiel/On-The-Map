@@ -25,7 +25,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
             return ({ [unowned self] result in
                 switch result {
                 case .Failure(let error):
-                    
                     switch error.errorType {
                     case .RequestJSONFormat:
                         fatalError("JSON error in facebook login request")

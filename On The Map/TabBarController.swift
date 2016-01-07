@@ -13,6 +13,7 @@ import SafariServices
 
 protocol Refreshing {
     func refresh(data: [StudentInformationAnnotation])
+    func alert(error: NSError)
 }
 
 protocol MapViewControlling {
@@ -37,11 +38,19 @@ class TabBarController: UITabBarController, SFSafariViewControllerDelegate, CLLo
     }
     
     @IBAction func refeshData(sender: AnyObject) {
-        StudentDataStore.sharedStore.getStudentLocations { [unowned self] data in
-            self.viewControllers?.forEach { vc in
-                if vc is Refreshing {
-                    let refresher = vc as! Refreshing
-                    refresher.refresh(data)
+        StudentDataStore.sharedStore.getStudentLocations { [unowned self] result in
+            switch result {
+            case .Success(let data):
+                self.viewControllers?.forEach { vc in
+                    if vc is Refreshing {
+                        let refresher = vc as! Refreshing
+                        refresher.refresh(data)
+                    }
+                }
+            case .Failure(let error):
+                if sender is Refreshing {
+                    let refreshingSender = sender as! Refreshing
+                    refreshingSender.alert(error)
                 }
             }
         }

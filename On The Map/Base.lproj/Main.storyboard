@@ -64,7 +64,7 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c4h-zf-MER" id="Jaw-Ie-WK6">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -323,6 +323,9 @@
                                     <action selector="buttonPressed:" destination="85e-6E-JBu" eventType="touchUpInside" id="pYM-RR-dD7"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6Dh-Fb-gqm">
+                                <rect key="frame" x="291" y="121" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -331,18 +334,21 @@
                             <constraint firstItem="ZJy-ne-1jC" firstAttribute="top" secondItem="srg-HG-AqE" secondAttribute="bottom" constant="8" id="715-Ru-9Rq"/>
                             <constraint firstItem="ZJy-ne-1jC" firstAttribute="leading" secondItem="qse-Ul-iSS" secondAttribute="leadingMargin" id="9At-18-s4t"/>
                             <constraint firstItem="lSL-Ly-p53" firstAttribute="leading" secondItem="qse-Ul-iSS" secondAttribute="leadingMargin" id="Bhe-3F-rni"/>
+                            <constraint firstItem="6Dh-Fb-gqm" firstAttribute="centerY" secondItem="lSL-Ly-p53" secondAttribute="centerY" id="JkF-Fe-fJ2"/>
                             <constraint firstItem="D37-ud-RdE" firstAttribute="top" secondItem="667-4z-IxA" secondAttribute="bottom" id="TE2-cf-hy8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="667-4z-IxA" secondAttribute="trailing" constant="-20" id="VU8-p7-QZQ"/>
                             <constraint firstItem="hlG-Bz-qNP" firstAttribute="top" secondItem="ZJy-ne-1jC" secondAttribute="bottom" constant="10" id="Xg7-db-nnr"/>
                             <constraint firstItem="667-4z-IxA" firstAttribute="top" secondItem="lSL-Ly-p53" secondAttribute="bottom" constant="16" id="fCa-Yf-vKK"/>
                             <constraint firstItem="lSL-Ly-p53" firstAttribute="trailing" secondItem="qse-Ul-iSS" secondAttribute="trailingMargin" id="hKt-g0-F1p"/>
                             <constraint firstItem="lSL-Ly-p53" firstAttribute="top" secondItem="hlG-Bz-qNP" secondAttribute="bottom" constant="10" id="lR4-Da-pJu"/>
+                            <constraint firstItem="6Dh-Fb-gqm" firstAttribute="centerX" secondItem="qse-Ul-iSS" secondAttribute="centerX" id="oXb-BP-APT"/>
                             <constraint firstItem="667-4z-IxA" firstAttribute="leading" secondItem="qse-Ul-iSS" secondAttribute="leadingMargin" constant="-20" id="utS-P7-uEt"/>
                             <constraint firstItem="hlG-Bz-qNP" firstAttribute="trailing" secondItem="qse-Ul-iSS" secondAttribute="trailingMargin" id="y19-1O-QhH"/>
                             <constraint firstItem="Agf-B8-3ze" firstAttribute="centerX" secondItem="qse-Ul-iSS" secondAttribute="centerX" id="zoi-UD-wfu"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="6Dh-Fb-gqm" id="Do3-7V-zB2"/>
                         <outlet property="findButton" destination="Agf-B8-3ze" id="d0h-kl-ifn"/>
                         <outlet property="locationField" destination="lSL-Ly-p53" id="T9l-0S-PnM"/>
                         <outlet property="mapView" destination="667-4z-IxA" id="AuY-eg-1Fl"/>

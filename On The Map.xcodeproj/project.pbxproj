@@ -13,6 +13,9 @@
 		77772CC81C3523CF009E1376 /* NSURL+Sanitize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77772CC71C3523CF009E1376 /* NSURL+Sanitize.swift */; };
 		77772CC91C3523CF009E1376 /* NSURL+Sanitize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77772CC71C3523CF009E1376 /* NSURL+Sanitize.swift */; };
 		77772CCA1C3523CF009E1376 /* NSURL+Sanitize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77772CC71C3523CF009E1376 /* NSURL+Sanitize.swift */; };
+		77963EDD1C3E10A70038203A /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77963EDC1C3E10A70038203A /* TabViewController.swift */; };
+		77963EDE1C3E10A70038203A /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77963EDC1C3E10A70038203A /* TabViewController.swift */; };
+		77963EDF1C3E10A70038203A /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77963EDC1C3E10A70038203A /* TabViewController.swift */; };
 		779B45111C1D0D820024CDDE /* StudentDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779B45101C1D0D820024CDDE /* StudentDataStore.swift */; };
 		779B45121C1D0D820024CDDE /* StudentDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779B45101C1D0D820024CDDE /* StudentDataStore.swift */; };
 		779B45131C1D0D820024CDDE /* StudentDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779B45101C1D0D820024CDDE /* StudentDataStore.swift */; };
@@ -55,6 +58,7 @@
 		776CC9561C35249600973A94 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		7776B8C81BEC7C08007550DC /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		77772CC71C3523CF009E1376 /* NSURL+Sanitize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURL+Sanitize.swift"; sourceTree = "<group>"; };
+		77963EDC1C3E10A70038203A /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
 		779B45101C1D0D820024CDDE /* StudentDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentDataStore.swift; sourceTree = "<group>"; };
 		77CCC1781BE694F000390913 /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		77CCC17B1BE694F000390913 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 		77CCC17A1BE694F000390913 /* On The Map */ = {
 			isa = PBXGroup;
 			children = (
+				77963EDC1C3E10A70038203A /* TabViewController.swift */,
 				77772CC71C3523CF009E1376 /* NSURL+Sanitize.swift */,
 				779B45101C1D0D820024CDDE /* StudentDataStore.swift */,
 				7716E48E1BED9D0000CC2208 /* API.swift */,
@@ -396,6 +401,7 @@
 				776CC9571C35249600973A94 /* TabBarController.swift in Sources */,
 				77CCC17C1BE694F000390913 /* AppDelegate.swift in Sources */,
 				779B45111C1D0D820024CDDE /* StudentDataStore.swift in Sources */,
+				77963EDD1C3E10A70038203A /* TabViewController.swift in Sources */,
 				77CCC1B21BE70CA600390913 /* ListViewController.swift in Sources */,
 				77CCC1B01BE70C6100390913 /* MapViewController.swift in Sources */,
 				7716E48F1BED9D0000CC2208 /* API.swift in Sources */,
@@ -410,6 +416,7 @@
 				7716E4901BED9D0000CC2208 /* API.swift in Sources */,
 				77772CC91C3523CF009E1376 /* NSURL+Sanitize.swift in Sources */,
 				779B45121C1D0D820024CDDE /* StudentDataStore.swift in Sources */,
+				77963EDE1C3E10A70038203A /* TabViewController.swift in Sources */,
 				77CCC1911BE694F100390913 /* On_The_MapTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +425,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77963EDF1C3E10A70038203A /* TabViewController.swift in Sources */,
 				779B45131C1D0D820024CDDE /* StudentDataStore.swift in Sources */,
 				77CCC19C1BE694F100390913 /* On_The_MapUITests.swift in Sources */,
 				77772CCA1C3523CF009E1376 /* NSURL+Sanitize.swift in Sources */,

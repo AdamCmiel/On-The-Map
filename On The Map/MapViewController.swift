@@ -12,32 +12,11 @@ import CoreLocation
 
 let MAP_ANNOTATION_IDENTIFIER = "map_pin"
 
-class MapViewController: UIViewController, MKMapViewDelegate, Refreshing, MapViewControlling {
+class MapViewController: TabViewController, MKMapViewDelegate, Refreshing, MapViewControlling {
     
     @IBOutlet weak var mapView: MKMapView!
     
-    var store: StudentDataStore {
-        get { return StudentDataStore.sharedStore }
-    }
-    
     private var mapViewsCurrentAnnotations: [MKAnnotation] = []
-    
-    func refresh(data: [StudentInformationAnnotation]) {
-        mapView.removeAnnotations(mapViewsCurrentAnnotations)
-        mapView.addAnnotations(data)
-        mapViewsCurrentAnnotations = data
-        print("got student locations")
-    }
-    
-    // MARK: UIViewController
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if store.hasUdacitySession {
-            store.getStudentLocations { [unowned self] data in self.refresh(data) }
-        }
-    }
     
     // MARK: MKMapViewDelegate
     
@@ -79,4 +58,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, Refreshing, MapVie
         }
     }
     
+    // MARK: - Refreshing
+    
+    func refresh(data: [StudentInformationAnnotation]) {
+        mapView.removeAnnotations(mapViewsCurrentAnnotations)
+        mapView.addAnnotations(data)
+        mapViewsCurrentAnnotations = data
+        print("got student locations")
+    }
 }

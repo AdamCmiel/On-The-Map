@@ -80,17 +80,22 @@ class StudentDataStore: NSObject {
         return backing
     }
     
-    final func getStudentLocations(completion: [StudentInformationAnnotation] -> ()) {
+    enum LocationDataFailingParameter {
+        case Success([StudentInformationAnnotation])
+        case Failure(NSError)
+    }
+    
+    final func getStudentLocations(completion: LocationDataFailingParameter -> ()) {
         APIActions.getStudentLocations { [unowned self] result in
             switch result {
             case .Failure:
-                fatalError("error getting student locations")
+                completion(.Failure(NSError(domain: "could not get studentData results", code: 0, userInfo: nil)))
             case .Success(let studentData):
                 if let dataToMerge = studentData["results"] as? [JSONData] {
                     let annotations = self.merge(dataToMerge).sort().map { StudentInformationAnnotation($0) }
-                    completion(annotations)
+                    completion(.Success(annotations))
                 } else {
-                    fatalError("could not get studentData results")
+                    completion(.Failure(NSError(domain: "could not get studentData results", code: 0, userInfo: nil)))
                 }
             }
             
