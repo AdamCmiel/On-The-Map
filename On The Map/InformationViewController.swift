@@ -188,6 +188,13 @@ class InformationViewController: UIViewController, MapViewControlling, UITextFie
             switch result {
             case .Success:
                 self.postAlert(.Success, then: {
+                    let nc = self.presentingViewController as! UINavigationController
+                    nc.viewControllers.forEach { vc in
+                        if vc is TabBarController {
+                            let tbc = vc as! TabBarController
+                            tbc.refeshData(self)
+                        }
+                    }
                     self.cancel(self)
                 })
             case .Failure(let error):

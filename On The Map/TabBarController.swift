@@ -93,9 +93,20 @@ class TabBarController: UITabBarController, SFSafariViewControllerDelegate, CLLo
         }
     }
     
+    // MARK: - SFSafariViewControllerDelegate
+    
     func safariViewControllerDidFinish(controller: SFSafariViewController) {
         print("safari view controller finished")
     }
+    
+    func safariViewController(controller: SFSafariViewController, didCompleteInitialLoad didLoadSuccessfully: Bool) {
+        if !didLoadSuccessfully {
+            controller.dismissViewControllerAnimated(true, completion: nil)
+            print("safari view controller dismissed")
+        }
+    }
+    
+    // MARK: - LoginControllerDelegate
     
     func loginViewController(loginViewController: LoginViewController, didSuccessfullyLoginWithData data: JSONData) {
         loginViewController.dismissViewControllerAnimated(true, completion: nil)
@@ -113,6 +124,8 @@ class TabBarController: UITabBarController, SFSafariViewControllerDelegate, CLLo
         webView.delegate = self
         loginViewController.presentViewController(webView, animated: true, completion: nil)
     }
+    
+    // MARK: - CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.viewControllers?.forEach { vc in
