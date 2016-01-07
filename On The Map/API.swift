@@ -12,15 +12,12 @@ internal typealias APICallback = APIResponse -> Void
 internal typealias JSONData = [String: AnyObject]
 
 enum EndPoint: String {
-    case SignIn = "https://www.udacity.com/api/session"
-    case SignOut = "https://www.udacity.com/api/signOut"
+    case Session = "https://www.udacity.com/api/session"
     case StudentLocations = "https://api.parse.com/1/classes/StudentLocation"
     
     var isFromUdacityAPI: Bool {
         switch self {
-        case .SignIn:
-            fallthrough
-        case .SignOut:
+        case .Session:
             return true
         default:
             return false
@@ -39,6 +36,7 @@ enum APIErrorType {
     case Network
     case RequestJSONFormat
     case ResponseJSONFormat
+    case ResponseCode
 }
 
 struct APIError {
@@ -103,10 +101,18 @@ struct API {
             
             do {
                 
-                let dataToParse = URLString.isFromUdacityAPI ? data!.subdataWithRange(NSRange(location: 5, length: data!.length - 5)) : data!
-                let json = try NSJSONSerialization.JSONObjectWithData(dataToParse, options: [.MutableLeaves, .AllowFragments]) as! JSONData
-                callback(APIResponse.Success(json))
-                return
+                let statusCode = (response as! NSHTTPURLResponse).statusCode
+                switch statusCode {
+                case 200...399:
+                    let dataToParse = URLString.isFromUdacityAPI ? data!.subdataWithRange(NSRange(location: 5, length: data!.length - 5)) : data!
+                    let json = try NSJSONSerialization.JSONObjectWithData(dataToParse, options: [.MutableLeaves, .AllowFragments]) as! JSONData
+                    callback(APIResponse.Success(json))
+                    return
+                case 0...199:
+                    fallthrough
+                default:
+                    callback(APIResponse.Failure(APIError(errorType: .ResponseCode, error: nil)))
+                }
                 
             }
             catch (let JSONError) {

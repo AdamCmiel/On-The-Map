@@ -58,8 +58,13 @@ class TabBarController: UITabBarController, SFSafariViewControllerDelegate, CLLo
     
     @IBAction func logout(sender: AnyObject) {
         StudentDataStore.sharedStore = StudentDataStore()
-        APIActions.signOut() { [unowned self] _ in
-            self.showLoginViewController()
+        APIActions.signOut() { [unowned self] result in
+            switch result {
+            case .Success:
+                self.showLoginViewController()
+            case .Failure(let error):
+                print(error)
+            }
         }
     }
     

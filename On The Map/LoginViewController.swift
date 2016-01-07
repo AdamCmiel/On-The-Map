@@ -34,6 +34,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
                         self.showLoginErrorAlertFromProvider("facebook")
                     case .Cancelled:
                         print("user cancelled facebook signin")
+                    case .ResponseCode:
+                        print("strange response from api")
                     }
                     
                 case .Success(let data):

@@ -29,15 +29,24 @@ struct APIActions {
             ]
         ]
         
-        API.post(.SignIn, data, completion: completion)
+        API.post(.Session, data, completion: completion)
     }
     
     static func signOut(completion: APICallback) {
         if FBSDKAccessToken.currentAccessToken() != nil {
             FBSDKLoginManager().logOut()
-            completion(.Success([:]))
+        }
+        
+        var xsrfCookie: NSHTTPCookie?
+        NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies!.forEach { cookie in
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        
+        if let xsrfCookie = xsrfCookie {
+            let sessionHeaders = ["X-XSRF-TOKEN": xsrfCookie.value]
+            API.delete(.Session, nil, headers: sessionHeaders, completion: completion)
         } else {
-            API.delete(.SignOut, nil, completion: completion)
+            API.delete(.Session, completion: completion)
         }
     }
     
@@ -85,7 +94,7 @@ struct APIActions {
                     StudentDataStore.sharedStore.lastName = lastName
                 }
                 
-                API.post(.SignIn, ["facebook_mobile": ["access_token": tokenString]]) { response in
+                API.post(.Session, ["facebook_mobile": ["access_token": tokenString]]) { response in
                     switch response {
                     case .Success(let body):
                         
