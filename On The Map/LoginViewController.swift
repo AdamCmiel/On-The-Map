@@ -36,6 +36,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
                         print("user cancelled facebook signin")
                     case .ResponseCode:
                         print("strange response from api")
+                    case .Unauthorized:
+                        self.showLoginErrorAlert("udacity account credentials invalid")
                     }
                     
                 case .Success(let data):
@@ -80,7 +82,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
     }
     
     private final func showLoginErrorAlertFromProvider(provider: String) {
-        let alert = UIAlertController(title: "Failed Login", message: "there was an error logging in with \(provider)", preferredStyle: .Alert)
+        return showLoginErrorAlert("there was an error logging in with \(provider)")
+    }
+    
+    private final func showLoginErrorAlert(message: String = "there was an error loggin in") {
+        let alert = UIAlertController(title: "Failed Login", message: message, preferredStyle: .Alert)
         let okButton = UIAlertAction(title: "OK", style: .Default) { [unowned self] _ in
             alert.dismissViewControllerAnimated(true, completion: nil)
             self.enable()

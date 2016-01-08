@@ -37,6 +37,7 @@ enum APIErrorType {
     case RequestJSONFormat
     case ResponseJSONFormat
     case ResponseCode
+    case Unauthorized
 }
 
 struct APIError {
@@ -108,6 +109,8 @@ struct API {
                     let json = try NSJSONSerialization.JSONObjectWithData(dataToParse, options: [.MutableLeaves, .AllowFragments]) as! JSONData
                     callback(APIResponse.Success(json))
                     return
+                case 403:
+                    callback(APIResponse.Failure(APIError(errorType: .Unauthorized, error: nil)))
                 case 0...199:
                     fallthrough
                 default:
