@@ -48,8 +48,8 @@ class TabBarController: UITabBarController, SFSafariViewControllerDelegate, CLLo
                     }
                 }
             case .Failure(let error):
-                if sender is Refreshing {
-                    let refreshingSender = sender as! Refreshing
+                if self.selectedViewController! is Refreshing {
+                    let refreshingSender = self.selectedViewController as! Refreshing
                     refreshingSender.alert(error)
                 }
             }
