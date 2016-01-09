@@ -13,15 +13,29 @@ internal typealias JSONData = [String: AnyObject]
 
 enum EndPoint: String {
     case Session = "https://www.udacity.com/api/session"
-    case StudentLocations = "https://api.parse.com/1/classes/StudentLocation"
+    case GetStudentLocations = "https://api.parse.com/1/classes/StudentLocation"
+    case PostStudentLocations = "https://api.parse.com/1/classes/StudentLocation?order=-updatedAt&limit=100"
+    case Users = "https://www.udacity.com/api/users"
+    
+    static func user(userKey: String) -> String {
+        return "\(EndPoint.Users.rawValue)/\(userKey)"
+    }
     
     var isFromUdacityAPI: Bool {
         switch self {
         case .Session:
+            fallthrough
+        case .Users:
             return true
         default:
             return false
         }
+    }
+}
+
+extension String {
+    var isFromUdacityAPI: Bool {
+        return containsString("www.udacity.com")
     }
 }
 
@@ -59,11 +73,30 @@ enum Method: String {
 struct API {
     static func request(method: Method,
         _ URLString: EndPoint,
+        path: String,
         parameters: [String: AnyObject]? = nil,
         headers: [String: String]? = nil,
         completion: APICallback) {
+            return request(method, URLString.rawValue + path, parameters: parameters, headers: headers, completion: completion)
+    }
+    
+    static func request(method: Method,
+        _ URLString: EndPoint,
+        parameters: [String: AnyObject]? = nil,
+        headers: [String: String]? = nil,
+        completion: APICallback) {
+            return request(method, URLString.rawValue, parameters: parameters, headers: headers, completion: completion)
+    }
+    
+    static func request(method: Method,
+        _ URLString: String,
+        parameters: [String: AnyObject]? = nil,
+        headers: [String: String]? = nil,
+        completion: APICallback) {
+            
+        print(URLString)
         
-        let request = NSMutableURLRequest(URL: NSURL(string: URLString.rawValue)!)
+        let request = NSMutableURLRequest(URL: NSURL(string: URLString)!)
         let session = NSURLSession.sharedSession()
         request.HTTPMethod = method.rawValue
             
@@ -110,11 +143,11 @@ struct API {
                     callback(APIResponse.Success(json))
                     return
                 case 403:
-                    callback(APIResponse.Failure(APIError(errorType: .Unauthorized, error: nil)))
+                    callback(APIResponse.Failure(APIError(errorType: .Unauthorized, error: error)))
                 case 0...199:
                     fallthrough
                 default:
-                    callback(APIResponse.Failure(APIError(errorType: .ResponseCode, error: nil)))
+                    callback(APIResponse.Failure(APIError(errorType: .ResponseCode, error: error)))
                 }
                 
             }
@@ -130,6 +163,10 @@ struct API {
     
     static func get(endpoint: EndPoint, headers: [String: String]? = jsonHeaders, completion: APICallback) {
         return request(.GET, endpoint, parameters: nil, headers: headers, completion: completion)
+    }
+    
+    static func get(endpoint: String, completion: APICallback) {
+        return request(.GET, endpoint, completion: completion)
     }
     
     static func post(endpoint: EndPoint, _ parameters: [String: AnyObject]? = nil, headers: [String: String]? = jsonHeaders, completion: APICallback) {

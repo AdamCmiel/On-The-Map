@@ -23,6 +23,7 @@ class InformationViewController: UIViewController, MapViewControlling, UITextFie
     private var state: State = .LocationPrompt
     private var location: CLLocation?
     private var url: String = "https://www.udacity.com"
+    private var mapString: String = ""
 
     @IBAction final func cancel(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
@@ -34,6 +35,8 @@ class InformationViewController: UIViewController, MapViewControlling, UITextFie
             let queryString = locationField.text!
             promptLabel.text = "Searching for the location"
             disable()
+            
+            mapString = queryString
             
             CLGeocoder().geocodeAddressString(queryString) { [unowned self] placemark, error in
                 guard error == nil else {
@@ -176,27 +179,36 @@ class InformationViewController: UIViewController, MapViewControlling, UITextFie
         }
         
         if let val = locationField.text {
-            data["mapString"] = val
+            data["mediaURL"] = val
+        } else {
+            data["mediaURL"] = "https://udacity.com"
         }
         
-        data["mediaURL"] = "https://udacity.com"
+        data["mapString"] = mapString
         
         disable()
         promptLabel.text = "Sending Data to Server"
         
         APIActions.postStudentLocation(data) { [unowned self] result in
             switch result {
-            case .Success:
-                self.postAlert(.Success, then: {
-                    let nc = self.presentingViewController as! UINavigationController
-                    nc.viewControllers.forEach { vc in
-                        if vc is TabBarController {
-                            let tbc = vc as! TabBarController
-                            tbc.refeshData(self)
+            case .Success(let data):
+                print(data)
+                if let _ = data["objectId"] as? String {
+                    self.postAlert(.Success, then: {
+                        let nc = self.presentingViewController as! UINavigationController
+                        nc.viewControllers.forEach { vc in
+                            if vc is TabBarController {
+                                let tbc = vc as! TabBarController
+                                tbc.refeshData(self)
+                            }
                         }
-                    }
-                    self.cancel(self)
-                })
+                        self.cancel(self)
+                    })
+                } else {
+                    self.postAlert(.Failure, then: {
+                        self.cancel(self)
+                    })
+                }
             case .Failure(let error):
                 print("POST location error")
                 print(error)

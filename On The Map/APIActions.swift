@@ -50,6 +50,11 @@ struct APIActions {
         }
     }
     
+    static func getPublicUserData(userKey: String, completion: APICallback) {
+        let endPoint = EndPoint.user(userKey)
+        API.get(endPoint, completion: completion)
+    }
+    
     static func facebookLogInFromViewController(viewController: UIViewController, completion: APICallback) {
         
         // if there is a valid session
@@ -77,27 +82,29 @@ struct APIActions {
                 let token = FBSDKAccessToken.currentAccessToken()
                 let tokenString: String = token.tokenString
                 
-                let fbRequest = FBSDKGraphRequest(graphPath:"me", parameters: nil);
-                fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
-                    
-                    guard error == nil else {
-                        print("Error Getting Info \(error)");
-                        return
-                    }
-                    
-                    let name = result["name"] as! String
-                    let names = name.componentsSeparatedByString(" ")
-                    let firstName = names.first
-                    let lastName = names.last
-                    
-                    StudentDataStore.sharedStore.firstName = firstName
-                    StudentDataStore.sharedStore.lastName = lastName
-                }
+// GET USER DATA FROM UDACITY API INSTEAD
+//                let fbRequest = FBSDKGraphRequest(graphPath:"me", parameters: nil);
+//                fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
+//                    
+//                    guard error == nil else {
+//                        print("Error Getting Info \(error)");
+//                        return
+//                    }
+//                    
+//                    let name = result["name"] as! String
+//                    let names = name.componentsSeparatedByString(" ")
+//                    let firstName = names.first
+//                    let lastName = names.last
+//                    
+//                    StudentDataStore.sharedStore.firstName = firstName
+//                    StudentDataStore.sharedStore.lastName = lastName
+//                }
                 
                 API.post(.Session, ["facebook_mobile": ["access_token": tokenString]]) { response in
                     switch response {
                     case .Success(let body):
                         
+                            
                         // NSURLSession.sharedSession gets cookie from API response
                         completion(.Success(body))
                         
@@ -115,7 +122,7 @@ struct APIActions {
     // MARK: Parse API
     
     static func getStudentLocations(completion: APICallback) {
-        API.get(.StudentLocations, headers: parseHeaders, completion: completion)
+        API.get(.GetStudentLocations, headers: parseHeaders, completion: completion)
     }
     
     static func postStudentLocation(var data: JSONData, completion: APICallback) {
@@ -124,6 +131,6 @@ struct APIActions {
             data["url"] = "https://www.udacity.com"
         }
         
-        API.post(.StudentLocations, data, headers: parseHeaders, completion: completion)
+        API.post(.PostStudentLocations, data, headers: parseHeaders, completion: completion)
     }
 }

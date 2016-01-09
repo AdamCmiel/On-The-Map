@@ -31,7 +31,7 @@ class StudentDataStore: NSObject {
         
         set(s) {
             _session = s
-            setUdacityKey()
+            setProperties()
         }
     }
     
@@ -39,9 +39,17 @@ class StudentDataStore: NSObject {
         return session != nil
     }
     
-    final private func setUdacityKey() {
+    final private func setProperties() {
         if let key = _session?["account"]?["key"] as? String {
             udacityKey = key
+        }
+        
+        if let key = _session?["_user"]?["first_name"] as? String {
+            firstName = key
+        }
+        
+        if let key = _session?["_user"]?["last_name"] as? String {
+            lastName = key
         }
     }
     
@@ -74,12 +82,6 @@ class StudentDataStore: NSObject {
         return self
     }
     
-    final private func sort() -> [StudentInformation] {
-        // remove duplicates
-        backing = uniq(backing).sort { return $0.updatedAt > $1.updatedAt }
-        return backing
-    }
-    
     enum LocationDataFailingParameter {
         case Success([StudentInformationAnnotation])
         case Failure(NSError)
@@ -92,7 +94,7 @@ class StudentDataStore: NSObject {
                 completion(.Failure(NSError(domain: "could not get studentData results", code: 0, userInfo: nil)))
             case .Success(let studentData):
                 if let dataToMerge = studentData["results"] as? [JSONData] {
-                    let annotations = self.merge(dataToMerge).sort().map { StudentInformationAnnotation($0) }
+                    let annotations = self.merge(dataToMerge).backing.map { StudentInformationAnnotation($0) }
                     completion(.Success(annotations))
                 } else {
                     completion(.Failure(NSError(domain: "could not get studentData results", code: 0, userInfo: nil)))
@@ -214,17 +216,4 @@ private func ==(lhs: NSDate, rhs: NSDate) -> Bool {
 
 private func >(lhs: NSDate, rhs: NSDate) -> Bool {
     return rhs.compare(lhs) == .OrderedAscending
-}
-
-// uniq method taken from http://stackoverflow.com/a/25739498
-private func uniq<S : SequenceType, T : Hashable where S.Generator.Element == T>(source: S) -> [T] {
-    var buffer = [T]()
-    var added = Set<T>()
-    for elem in source {
-        if !added.contains(elem) {
-            buffer.append(elem)
-            added.insert(elem)
-        }
-    }
-    return buffer
 }

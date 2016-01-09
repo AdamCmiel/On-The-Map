@@ -31,7 +31,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
                     case .ResponseJSONFormat: fallthrough
                     case .Network:
                         print(error.error)
-                        self.showLoginErrorAlertFromProvider("facebook")
+                        self.showLoginErrorAlert("no internet connection")
                     case .Cancelled:
                         print("user cancelled facebook signin")
                     case .ResponseCode:
@@ -40,12 +40,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
                         self.showLoginErrorAlert("udacity account credentials invalid")
                     }
                     
-                case .Success(let data):
+                case .Success(var data):
                     // if successful login, store login in the dataStore
                     if let _ = data["error"] {
                         return self.showLoginErrorAlertFromProvider("udacity")
                     } else {
-                        self.delegate?.loginViewController(self, didSuccessfullyLoginWithData: data)
+                        
+                        let key = data["account"]!["key"] as! String
+                        APIActions.getPublicUserData(key) { publicDataResult in
+                            switch publicDataResult {
+                            case .Success(let userData):
+                                data["_user"] = userData["user"]!
+                                self.delegate?.loginViewController(self, didSuccessfullyLoginWithData: data)
+                            case .Failure(let error):
+                                print(error)
+                                self.showLoginErrorAlert("could not fetch public data from Udacity")
+                            }
+                            
+                        }
                     }
                 }
                 
